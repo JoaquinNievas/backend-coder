@@ -11,24 +11,24 @@ router
   .post((req, res) =>
     pContainer.save(req.body).then((id) => res.send(id.toString()))
   )
-  .delete((req, res) => {
-    //TODO delete all products
-    res.send("delete ok");
-  });
+  .delete((req, res) =>
+    pContainer
+      .deleteAll()
+      .then(() => res.send("Eliminados todos los productos"))
+  );
 
 router
   .route("/productos/:id")
   .get((req, res) =>
-    //TODO handle error
     pContainer.getById(req.params.id).then((prod) => res.send(prod))
   )
   .put((req, res) => {
-    //TODO update product
-    res.send("put ok");
+    const prod = req.body;
+    prod._id = req.params.id;
+    pContainer.save(prod).then((id) => res.send(id.toString()));
   })
-  .delete((req, res) => {
-    //TODO delete product
-    res.send("delete ok");
-  });
+  .delete((req, res) =>
+    pContainer.deleteById(req.params.id).then(() => res.send("Eliminado"))
+  );
 
 export default router;

@@ -18,13 +18,18 @@ export default class Contenedor {
       let exist = true;
       //verifico si existe el archivo
       await fs.promises.stat(FILE_PATH).catch((_) => (exist = false));
-      console.log(exist ? "El archivo existe" : "El archivo no existe");
+      console.log(`La base de datos ${exist ? "existe" : "no existe"}`);
       const file = exist
         ? await fs.promises.readFile(FILE_PATH, "utf-8")
         : false;
       if (file) data = JSON.parse(file);
-      product._id = data.length == 0 ? 1 : data[data.length - 1]._id + 1;
-      data.push(product);
+      const index = data.findIndex((prod) => prod._id == product._id);
+      if (index != -1) {
+        data[index] = product;
+      } else {
+        product._id = data.length == 0 ? 1 : data[data.length - 1]._id + 1;
+        data.push(product);
+      }
       await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
       return product._id;
     } catch (error) {
@@ -39,7 +44,7 @@ export default class Contenedor {
       if (!file) throw new Error("El archivo está vacío");
       const data = JSON.parse(file);
       const producto = data.find((producto) => producto._id == id);
-      return producto ?? null;
+      return producto ?? { error: "Producto no encontrado" };
     } catch (error) {
       console.log(`error de lectura en getById: ${error.message}`);
     }
@@ -76,7 +81,7 @@ export default class Contenedor {
       const file = await fs.promises.readFile(FILE_PATH, "utf-8");
       if (!file) throw new Error("El archivo está vacío");
       let data = JSON.parse(file);
-      const index = data.findIndex((producto) => producto._id === id);
+      const index = data.findIndex((producto) => producto._id == id);
       if (index == -1) throw new Error("El producto no existe");
       data.splice(index, 1);
       await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));

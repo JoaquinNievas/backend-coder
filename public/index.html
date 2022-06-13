@@ -9,18 +9,18 @@
 </head>
 
 <body>
-    <form action="/api/productos" method="POST" enctype="multipart/form-data">
+    <form action="/api/productos" method="POST">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Escribe el título">
         </div>
         <div class="form-group">
             <label for="price">Price</label>
-            <input type="text" class="form-control" id="price" name="price" placeholder="Price">
+            <input type="text" class="form-control" id="price" name="price" placeholder="99.99">
         </div>
         <div class="form-group">
             <label for="thumbnail">Thumbnail</label>
-            <input type="file" class="form-control" id="thumbnail" name="thumbnail">
+            <input type="text" class="form-control" id="thumbnail" name="thumbnail" placeholder="URL de imagen">
         </div>
         <button type="submit">Submit</button>
     </form>

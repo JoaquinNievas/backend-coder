@@ -7,6 +7,7 @@ const app = express();
 //   res.send("<h1>Hello World</h1>");
 // });
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/api", router);
 
