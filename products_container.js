@@ -38,7 +38,7 @@ export default class Contenedor {
       const file = await fs.promises.readFile(FILE_PATH, "utf-8");
       if (!file) throw new Error("El archivo está vacío");
       const data = JSON.parse(file);
-      const producto = data.find((producto) => producto._id === id);
+      const producto = data.find((producto) => producto._id == id);
       return producto ?? null;
     } catch (error) {
       console.log(`error de lectura en getById: ${error.message}`);
