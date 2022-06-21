@@ -7,9 +7,19 @@ const pContainer = new Contenedor();
 
 router
   .route("/productos")
-  .get((req, res) => pContainer.getAll().then((prods) => res.send(prods)))
+  .get((req, res) => {
+    pContainer
+      .getAll()
+      .then((products) => {
+        res.render("products", {
+          products: products,
+          cartAvailable: products.length > 0,
+        });
+      })
+      .catch((err) => res.render("products", { cartAvailable: false }));
+  })
   .post((req, res) =>
-    pContainer.save(req.body).then((id) => res.send(id.toString()))
+    pContainer.save(req.body).then((id) => res.redirect("/api/productos"))
   )
   .delete((req, res) =>
     pContainer

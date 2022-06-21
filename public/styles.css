@@ -1,0 +1,30 @@
+/********************* shopping Demo-1 **********************/
+.product-grid {
+  font-family: Raleway, sans-serif;
+  text-align: center;
+  /* padding: 0 0 72px; */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.product-grid .product-image {
+  position: relative;
+  transition: all 0.3s ease 0s;
+}
+.product-grid .product-image img {
+  width: 100%;
+  height: auto;
+}
+.product-grid .pic-1 {
+  opacity: 1;
+  transition: all 0.3s ease-out 0s;
+}
+.product-grid:hover .pic-1 {
+  opacity: 1;
+}
+@media only screen and (max-width: 990px) {
+  .product-grid {
+    margin-bottom: 30px;
+  }
+}
