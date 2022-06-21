@@ -1,11 +1,10 @@
 import express from "express";
 import router from "./routes.js";
-import { engine } from "express-handlebars";
 
 const app = express();
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
-app.set("views", "./views_hbs");
+
+app.set("views", "./views_pug");
+app.set("view engine", "pug");
 app.use(express.static("public"));
 
 app.use(express.json());
