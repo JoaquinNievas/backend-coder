@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Carga de productos</h1>
 
-  <form action="/api/productos" method="POST">
+  <form id="product-form">
     <div class="mb-3">
       <label for="title">Title</label>
       <input
@@ -43,4 +43,16 @@
     <a href="/api/productos" class="btn btn-secondary">Ir a sección productos</a>
   </div>
 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Imagen</th>
+      </tr>
+    </thead>
+    <tbody id="products">
+    </tbody>
+  </table>
 </div>

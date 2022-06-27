@@ -27,7 +27,8 @@ export default class Contenedor {
       if (index != -1) {
         data[index] = product;
       } else {
-        product._id = data.length == 0 ? 1 : data[data.length - 1]._id + 1;
+        product._id =
+          data.length == 0 ? 1 : parseInt(data[data.length - 1]._id) + 1;
         data.push(product);
       }
       await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
