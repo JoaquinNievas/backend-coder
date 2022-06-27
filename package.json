@@ -9,7 +9,7 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.3.0"
   },
   "author": "Joaquin_Nievas",
   "license": "ISC",
