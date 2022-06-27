@@ -1,14 +1,14 @@
 import fs from "fs";
 const FILE_PATH = "productos.txt";
 
-class Producto {
-  constructor(_id, title, price, thumbnail) {
-    this._id = _id;
-    this.title = title;
-    this.price = price;
-    this.thumbnail = thumbnail;
-  }
-}
+// class Producto {
+//   constructor(_id, title, price, thumbnail) {
+//     this._id = _id;
+//     this.title = title;
+//     this.price = price;
+//     this.thumbnail = thumbnail;
+//   }
+// }
 
 export default class Contenedor {
   async save(product) {
@@ -103,12 +103,12 @@ export default class Contenedor {
   }
 }
 
-const productos = [
-  new Producto("", "Producto 1", "10.00", "https://picsum.photos/200"),
-  new Producto("", "Producto 2", "20.00", "https://picsum.photos/200"),
-  new Producto("", "Producto 3", "30.00", "https://picsum.photos/200"),
-  new Producto("", "Producto 4", "40.00", "https://picsum.photos/200"),
-];
+// const productos = [
+//   new Producto("", "Producto 1", "10.00", "https://picsum.photos/200"),
+//   new Producto("", "Producto 2", "20.00", "https://picsum.photos/200"),
+//   new Producto("", "Producto 3", "30.00", "https://picsum.photos/200"),
+//   new Producto("", "Producto 4", "40.00", "https://picsum.photos/200"),
+// ];
 
 // const cont = new Contenedor();
 

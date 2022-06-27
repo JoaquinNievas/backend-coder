@@ -4,6 +4,7 @@ import { engine } from "express-handlebars";
 import http from "http";
 import { Server } from "socket.io";
 import Contenedor from "./products_container.js";
+import messageContainer from "./messages_container.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -26,15 +27,28 @@ server.listen(8080, () => {
 });
 
 const contenedor = new Contenedor();
+const messageCont = new messageContainer();
+
+// messageCont.save({ email: "joaquin", message: "hola" });
 
 io.on("connection", async (socket) => {
   console.log("Usuario conectado");
 
   const products = await contenedor.getAll();
   socket.emit("products", products);
+
+  const messages = await messageCont.getMessages();
+  socket.emit("messages", messages);
+
   socket.on("new-product", async (data) => {
     await contenedor.save(data);
     const products = await contenedor.getAll();
     io.sockets.emit("products", products);
+  });
+
+  socket.on("new-message", async (data) => {
+    await messageCont.save(data);
+    const messages = await messageCont.getMessages();
+    io.sockets.emit("messages", messages);
   });
 });
