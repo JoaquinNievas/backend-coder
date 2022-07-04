@@ -1,5 +1,5 @@
 import fs from "fs";
-const FILE_PATH = "productos.txt";
+const FILE_PATH = "productos.json";
 
 // class Producto {
 //   constructor(_id, title, price, thumbnail) {
@@ -13,93 +13,79 @@ const FILE_PATH = "productos.txt";
 export default class Contenedor {
   async save(product) {
     //recibe un objeto lo guarda en el archivo y devuelve el id asignado
-    try {
-      let data = [];
-      let exist = true;
-      //verifico si existe el archivo
-      await fs.promises.stat(FILE_PATH).catch((_) => (exist = false));
-      console.log(`La base de datos ${exist ? "existe" : "no existe"}`);
-      const file = exist
-        ? await fs.promises.readFile(FILE_PATH, "utf-8")
-        : false;
-      if (file) data = JSON.parse(file);
-      const index = data.findIndex((prod) => prod._id == product._id);
-      if (index != -1) {
-        data[index] = product;
-      } else {
-        product._id =
-          data.length == 0 ? 1 : parseInt(data[data.length - 1]._id) + 1;
-        data.push(product);
-      }
-      await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
-      return product._id;
-    } catch (error) {
-      console.log(`error en save: ${error.message}`);
+    let data = [];
+    let exist = true;
+    //verifico si existe el archivo
+    await fs.promises.stat(FILE_PATH).catch((_) => (exist = false));
+    console.log(`La base de datos ${exist ? "existe" : "no existe"}`);
+    const file = exist ? await fs.promises.readFile(FILE_PATH, "utf-8") : false;
+    if (file) data = JSON.parse(file);
+    const pId = parseInt(product.id);
+    const index = data.findIndex((prod) => prod.id === pId);
+    if (index != -1) {
+      //Actualizo
+      product.id = pId;
+      data[index] = product;
+    } else {
+      product.timestamp = new Date().getTime();
+      product.id =
+        data.length == 0 ? 1 : parseInt(data[data.length - 1].id) + 1;
+      data.push(product);
     }
+    await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
+    return product.id;
   }
 
   async getById(id) {
     //recibe un id y devuelve el objeto asociado
-    try {
-      const file = await fs.promises.readFile(FILE_PATH, "utf-8");
-      if (!file) throw new Error("El archivo está vacío");
-      const data = JSON.parse(file);
-      const producto = data.find((producto) => producto._id == id);
-      return producto ?? { error: "Producto no encontrado" };
-    } catch (error) {
-      console.log(`error de lectura en getById: ${error.message}`);
-    }
+    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    if (!file) throw new Error("El archivo está vacío");
+    const data = JSON.parse(file);
+    const producto = data.find((producto) => producto.id == id);
+    return producto ?? { error: "Producto no encontrado" };
+  }
+
+  async getByMultipleId(ids) {
+    //recibe un array de ids y devuelve un array de objetos asociados
+    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    if (!file) throw new Error("El archivo está vacío");
+    const data = JSON.parse(file);
+    const productos = data.filter((producto) => ids.includes(producto.id));
+    if (productos.length === 0) throw new Error("No se encontraron productos");
+    return productos;
   }
 
   async getRandom() {
     //devuelve un array con todos los objetos
-    try {
-      const file = await fs.promises.readFile(FILE_PATH, "utf-8");
-      if (!file) throw new Error("El archivo está vacío");
-      const data = JSON.parse(file);
-      //return random produto from data
-      return data[Math.floor(Math.random() * data.length)];
-    } catch (error) {
-      console.log(`error de lectura en getById: ${error.message}`);
-    }
+    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    if (!file) throw new Error("El archivo está vacío");
+    const data = JSON.parse(file);
+    //return random produto from data
+    return data[Math.floor(Math.random() * data.length)];
   }
 
   async getAll() {
     //devuelve un array con todos los objetos
-    try {
-      const file = await fs.promises.readFile(FILE_PATH, "utf-8");
-      if (!file) throw new Error("El archivo está vacío");
-      const data = JSON.parse(file);
-      return data;
-    } catch (error) {
-      console.log(`error de lectura en getById: ${error.message}`);
-    }
+    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    if (!file) throw new Error("El archivo está vacío");
+    const data = JSON.parse(file);
+    return data;
   }
 
   async deleteById(id) {
     //recibe un id y elimina el objeto asociado
-    try {
-      const file = await fs.promises.readFile(FILE_PATH, "utf-8");
-      if (!file) throw new Error("El archivo está vacío");
-      let data = JSON.parse(file);
-      const index = data.findIndex((producto) => producto._id == id);
-      if (index == -1) throw new Error("El producto no existe");
-      data.splice(index, 1);
-      await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
-      console.log("Eliminado");
-    } catch (error) {
-      console.log(`error en deleteById: ${error.message}`);
-    }
+    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    if (!file) throw new Error("El archivo está vacío");
+    let data = JSON.parse(file);
+    const index = data.findIndex((producto) => producto.id == id);
+    if (index == -1) throw new Error("El producto no existe");
+    data.splice(index, 1);
+    await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
   }
 
   async deleteAll() {
     //elimina todos los objetos
-    try {
-      await fs.promises.writeFile(FILE_PATH, "[]");
-      console.log("Se eliminaron todos los productos");
-    } catch {
-      console.log("error en deleteAll");
-    }
+    await fs.promises.writeFile(FILE_PATH, "[]");
   }
 }
 
