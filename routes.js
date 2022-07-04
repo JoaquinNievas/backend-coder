@@ -5,27 +5,29 @@ const { Router } = express;
 const router = Router();
 const pContainer = new Contenedor();
 
+let isAdmin = false;
+
 router
   .route("/productos")
   .get((req, res) => {
     pContainer
       .getAll()
-      .then((products) => {
-        res.render("products", {
-          products: products,
-          cartAvailable: products.length > 0,
-        });
-      })
-      .catch((err) => res.render("products", { cartAvailable: false }));
+      .then((products) => res.send(products))
+      .catch((err) => res.send({ error: err }));
   })
-  .post((req, res) =>
-    pContainer.save(req.body).then((id) => res.redirect("/api/productos"))
-  )
-  .delete((req, res) =>
+  .post((req, res) => {
+    if (!isAdmin) return res.send({ error: "No tienes permisos" });
+    pContainer.save(req.body).then((id) => {
+      res.send(is.toString());
+      // res.redirect("/api/productos");
+    });
+  })
+  .delete((req, res) => {
+    if (!isAdmin) return res.send({ error: "No tienes permisos" });
     pContainer
       .deleteAll()
-      .then(() => res.send("Eliminados todos los productos"))
-  );
+      .then(() => res.send("Eliminados todos los productos"));
+  });
 
 router
   .route("/productos/:id")
@@ -33,12 +35,14 @@ router
     pContainer.getById(req.params.id).then((prod) => res.send(prod))
   )
   .put((req, res) => {
+    if (!isAdmin) return res.send({ error: "No tienes permisos" });
     const prod = req.body;
     prod._id = req.params.id;
     pContainer.save(prod).then((id) => res.send(id.toString()));
   })
-  .delete((req, res) =>
-    pContainer.deleteById(req.params.id).then(() => res.send("Eliminado"))
-  );
+  .delete((req, res) => {
+    if (!isAdmin) return res.send({ error: "No tienes permisos" });
+    pContainer.deleteById(req.params.id).then(() => res.send("Eliminado"));
+  });
 
 export default router;

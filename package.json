@@ -1,5 +1,5 @@
 {
-  "name": "clase4",
+  "name": "ecommerce-backend",
   "version": "1.0.0",
   "description": "express server",
   "main": "server.js",
@@ -14,10 +14,9 @@
   "author": "Joaquin_Nievas",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.1.3",
-    "express": "^4.18.1",
-    "express-handlebars": "^6.0.6",
-    "nodemon": "^2.0.16",
-    "socket.io": "^4.5.1"
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
   }
 }
