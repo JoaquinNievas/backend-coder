@@ -1,9 +1,11 @@
 import express from "express";
-import Contenedor from "./products_container.js";
+import productsContainer from "./products_container.js";
+import cartContainer from "./cart_container.js";
 
 const { Router } = express;
 const router = Router();
-const pContainer = new Contenedor();
+const pContainer = new productsContainer();
+const cContainer = new cartContainer();
 
 let isAdmin = false;
 
@@ -16,14 +18,22 @@ router
       .catch((err) => res.send({ error: err }));
   })
   .post((req, res) => {
-    if (!isAdmin) return res.send({ error: "No tienes permisos" });
+    if (!isAdmin)
+      return res.send({
+        error: -1,
+        descripcion: "ruta productos método POST no autorizada",
+      });
     pContainer.save(req.body).then((id) => {
       res.send(is.toString());
       // res.redirect("/api/productos");
     });
   })
   .delete((req, res) => {
-    if (!isAdmin) return res.send({ error: "No tienes permisos" });
+    if (!isAdmin)
+      return res.send({
+        error: -1,
+        descripcion: "ruta productos método DELETE no autorizada",
+      });
     pContainer
       .deleteAll()
       .then(() => res.send("Eliminados todos los productos"));
@@ -35,14 +45,50 @@ router
     pContainer.getById(req.params.id).then((prod) => res.send(prod))
   )
   .put((req, res) => {
-    if (!isAdmin) return res.send({ error: "No tienes permisos" });
+    if (!isAdmin)
+      return res.send({
+        error: -1,
+        descripcion: "ruta productos método PUT no autorizada",
+      });
     const prod = req.body;
     prod._id = req.params.id;
     pContainer.save(prod).then((id) => res.send(id.toString()));
   })
   .delete((req, res) => {
-    if (!isAdmin) return res.send({ error: "No tienes permisos" });
+    if (!isAdmin)
+      return res.send({
+        error: -1,
+        descripcion: "ruta productos método DELETE no autorizada",
+      });
     pContainer.deleteById(req.params.id).then(() => res.send("Eliminado"));
   });
+
+router.route("/carrito").post((req, res) => {
+  cContainer.save(req.body).then((id) => res.send(id.toString()));
+});
+
+router.route("/carrito/:id").delete((req, res) => {
+  cContainer.deleteById(req.params.id).then(() => res.send("Eliminado"));
+});
+
+router
+  .route("/carrito/:id/productos")
+  .get((req, res) => {
+    cContainer.getById(req.params.id).then((cart) => {
+      if (cart) return res.send(cart);
+      res.send({ error: "No se encontró el carrito" });
+    });
+  })
+  .post((req, res) => {
+    cContainer
+      .addProductToCart(req.params.id, req.body.id)
+      .then(() => res.send("Agregado"));
+  });
+
+router.route("/carrito/:id/productos/:productId").delete((req, res) => {
+  cContainer
+    .removeProductFromCart(req.params.id, req.params.productId)
+    .then(() => res.send("Eliminado"));
+});
 
 export default router;
