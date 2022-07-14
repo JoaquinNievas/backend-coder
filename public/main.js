@@ -5,7 +5,7 @@ function renderProducts(data) {
   const html = data
     .map((elem, index) => {
       return `<tr>
-      <th scope="row">${elem._id}</th>
+      <th scope="row">${elem.id}</th>
       <td>${elem.title}</td>
       <td>${elem.price}</td>
       <td>${elem.thumbnail}</td>

@@ -34,8 +34,8 @@ router
   )
   .put((req, res) => {
     const prod = req.body;
-    prod._id = req.params.id;
-    pContainer.save(prod).then((id) => res.send(id.toString()));
+    prod.id = req.params.id;
+    pContainer.save(prod).then((id) => res.send({ id }));
   })
   .delete((req, res) =>
     pContainer.deleteById(req.params.id).then(() => res.send("Eliminado"))

@@ -1,6 +1,6 @@
-import mariaDbOptions from "./options/mariaDB.js";
+import sqliteOptions from "./options/sqlite.js";
 import knex from "knex";
-const knexClient = knex(mariaDbOptions);
+const knexClient = knex(sqliteOptions);
 
 export default class Contenedor {
   async save(message) {
