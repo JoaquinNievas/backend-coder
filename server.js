@@ -29,8 +29,6 @@ server.listen(8080, () => {
 const contenedor = new Contenedor();
 const messageCont = new messageContainer();
 
-// messageCont.save({ email: "joaquin", message: "hola" });
-
 io.on("connection", async (socket) => {
   console.log("Usuario conectado");
 
