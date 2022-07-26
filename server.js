@@ -3,8 +3,10 @@ import router from "./routes.js";
 import { engine } from "express-handlebars";
 import http from "http";
 import { Server } from "socket.io";
-import Contenedor from "./daos/containers/products/products_container.js";
-import messageContainer from "./daos/containers/messages/messages_container.js";
+import {
+  products as productsApi,
+  messages as messagesApi,
+} from "./daos/index.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -26,27 +28,24 @@ server.listen(8080, () => {
   console.log("Server running on port 8080!");
 });
 
-const contenedor = new Contenedor();
-const messageCont = new messageContainer();
-
 io.on("connection", async (socket) => {
   console.log("Usuario conectado");
 
-  const products = await contenedor.getAll();
+  const products = await productsApi.getAll();
   socket.emit("products", products);
 
-  const messages = await messageCont.getMessages();
+  const messages = await messagesApi.getMessages();
   socket.emit("messages", messages);
 
   socket.on("new-product", async (data) => {
-    await contenedor.save(data);
-    const products = await contenedor.getAll();
+    await productsApi.save(data);
+    const products = await productsApi.getAll();
     io.sockets.emit("products", products);
   });
 
   socket.on("new-message", async (data) => {
-    await messageCont.save(data);
-    const messages = await messageCont.getMessages();
+    await messagesApi.save(data);
+    const messages = await messagesApi.getMessages();
     io.sockets.emit("messages", messages);
   });
 });

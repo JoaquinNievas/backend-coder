@@ -1,9 +1,9 @@
 import express from "express";
-import Contenedor from "./daos/containers/products/products_container.js";
+import { products as pContainer } from "./daos/index.js";
 
 const { Router } = express;
 const router = Router();
-const pContainer = new Contenedor();
+// const pContainer = products;
 
 router
   .route("/productos")
