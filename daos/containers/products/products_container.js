@@ -1,5 +1,5 @@
 import knex from "knex";
-import mariaDbOptions from "./options/mariadb.js";
+import mariaDbOptions from "../../db_config/mariaDB.js";
 const knexClient = knex(mariaDbOptions);
 
 // class Producto {

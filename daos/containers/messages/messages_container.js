@@ -1,4 +1,4 @@
-import sqliteOptions from "./options/sqlite.js";
+import sqliteOptions from "../../db_config/sqlite.js";
 import knex from "knex";
 const knexClient = knex(sqliteOptions);
 

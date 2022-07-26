@@ -1,4 +1,4 @@
-import mariaDbOptions from "./options/mariaDb.js";
+import mariaDbOptions from "./db_config/mariaDb.js";
 import knex from "knex";
 
 const knexClient = knex(mariaDbOptions);

@@ -1,5 +1,5 @@
 import express from "express";
-import Contenedor from "./products_container.js";
+import Contenedor from "./daos/containers/products/products_container.js";
 
 const { Router } = express;
 const router = Router();

@@ -3,8 +3,8 @@ import router from "./routes.js";
 import { engine } from "express-handlebars";
 import http from "http";
 import { Server } from "socket.io";
-import Contenedor from "./products_container.js";
-import messageContainer from "./messages_container.js";
+import Contenedor from "./daos/containers/products/products_container.js";
+import messageContainer from "./daos/containers/messages/messages_container.js";
 
 const app = express();
 const server = http.createServer(app);
