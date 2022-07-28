@@ -5,6 +5,8 @@ import CartContainerMongoDb from "./containers/cart/cart_container_mongoDb.js";
 import ProductsContainerFirebase from "./containers/products/products_container_firebase.js";
 import CartContainerFirebase from "./containers/cart/cart_container_firebase.js";
 import firebaseConfig from "./db_config/firebase.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const DATABASES = {
   file: {
