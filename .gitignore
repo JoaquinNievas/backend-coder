@@ -105,3 +105,6 @@ dist
 
 .node_modules
 .DS_Store
+
+#include firebase credentials json file
+coder-test*.json

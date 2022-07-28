@@ -7,6 +7,7 @@ export default class CartContainerMongoDb {
     if (!cart.id) cart.timestamp = Date().getTime();
     const cartModel = new cartModel(cart);
     await cartModel.save();
+    //TODO return cart.id;
   }
 
   //get by id

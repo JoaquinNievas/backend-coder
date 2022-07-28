@@ -2,6 +2,9 @@ import ProductFileContainer from "./containers/products/products_container_file.
 import CartFileContainer from "./containers/cart/cart_container_file.js";
 import ProductsContainerMongoDb from "./containers/products/products_container_mongoDb.js";
 import CartContainerMongoDb from "./containers/cart/cart_container_mongoDb.js";
+import ProductsContainerFirebase from "./containers/products/products_container_firebase.js";
+import CartContainerFirebase from "./containers/cart/cart_container_firebase.js";
+import firebaseConfig from "./db_config/firebase.js";
 
 const DATABASES = {
   file: {
@@ -14,9 +17,13 @@ const DATABASES = {
     ),
     cart: new CartContainerMongoDb(),
   },
+  firebase: {
+    products: new ProductsContainerFirebase(firebaseConfig),
+    cart: new CartContainerFirebase(),
+  },
 };
 
-const DB = process.env.SELECTED_DB || "mongo";
+const DB = process.env.SELECTED_DB || "firebase";
 console.log(`Using database: ${DB}`);
 
 const { products, cart } = DATABASES[DB];
