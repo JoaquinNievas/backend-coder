@@ -1,6 +1,4 @@
 import fs from "fs";
-const FILE_PATH = "productos.json";
-
 // class Producto {
 //   constructor(_id, title, price, thumbnail) {
 //     this._id = _id;
@@ -11,14 +9,20 @@ const FILE_PATH = "productos.json";
 // }
 
 export default class Contenedor {
+  constructor(FILE_PATH) {
+    this.FILE_PATH = FILE_PATH;
+  }
+
   async save(product) {
     //recibe un objeto lo guarda en el archivo y devuelve el id asignado
     let data = [];
     let exist = true;
     //verifico si existe el archivo
-    await fs.promises.stat(FILE_PATH).catch((_) => (exist = false));
+    await fs.promises.stat(this.FILE_PATH).catch((_) => (exist = false));
     console.log(`La base de datos ${exist ? "existe" : "no existe"}`);
-    const file = exist ? await fs.promises.readFile(FILE_PATH, "utf-8") : false;
+    const file = exist
+      ? await fs.promises.readFile(this.FILE_PATH, "utf-8")
+      : false;
     if (file) data = JSON.parse(file);
     const pId = parseInt(product.id);
     const index = data.findIndex((prod) => prod.id === pId);
@@ -32,13 +36,13 @@ export default class Contenedor {
         data.length == 0 ? 1 : parseInt(data[data.length - 1].id) + 1;
       data.push(product);
     }
-    await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
+    await fs.promises.writeFile(this.FILE_PATH, JSON.stringify(data));
     return product.id;
   }
 
   async getById(id) {
     //recibe un id y devuelve el objeto asociado
-    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    const file = await fs.promises.readFile(this.FILE_PATH, "utf-8");
     if (!file) throw new Error("El archivo está vacío");
     const data = JSON.parse(file);
     const producto = data.find((producto) => producto.id == id);
@@ -47,7 +51,7 @@ export default class Contenedor {
 
   async getByMultipleId(ids) {
     //recibe un array de ids y devuelve un array de objetos asociados
-    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    const file = await fs.promises.readFile(this.FILE_PATH, "utf-8");
     if (!file) throw new Error("El archivo está vacío");
     const data = JSON.parse(file);
     const productos = data.filter((producto) => ids.includes(producto.id));
@@ -57,7 +61,7 @@ export default class Contenedor {
 
   async getRandom() {
     //devuelve un array con todos los objetos
-    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    const file = await fs.promises.readFile(this.FILE_PATH, "utf-8");
     if (!file) throw new Error("El archivo está vacío");
     const data = JSON.parse(file);
     //return random produto from data
@@ -66,7 +70,7 @@ export default class Contenedor {
 
   async getAll() {
     //devuelve un array con todos los objetos
-    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    const file = await fs.promises.readFile(this.FILE_PATH, "utf-8");
     if (!file) throw new Error("El archivo está vacío");
     const data = JSON.parse(file);
     return data;
@@ -74,18 +78,18 @@ export default class Contenedor {
 
   async deleteById(id) {
     //recibe un id y elimina el objeto asociado
-    const file = await fs.promises.readFile(FILE_PATH, "utf-8");
+    const file = await fs.promises.readFile(this.FILE_PATH, "utf-8");
     if (!file) throw new Error("El archivo está vacío");
     let data = JSON.parse(file);
     const index = data.findIndex((producto) => producto.id == id);
     if (index == -1) throw new Error("El producto no existe");
     data.splice(index, 1);
-    await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
+    await fs.promises.writeFile(this.FILE_PATH, JSON.stringify(data));
   }
 
   async deleteAll() {
     //elimina todos los objetos
-    await fs.promises.writeFile(FILE_PATH, "[]");
+    await fs.promises.writeFile(this.FILE_PATH, "[]");
   }
 }
 

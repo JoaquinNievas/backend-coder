@@ -1,0 +1,188 @@
+[
+  {
+    "_id": "39fe7c5e-b653-4175-8038-68c01c0e0f82",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Productos: Eliminar todos",
+    "url": "localhost:8080/api/productos",
+    "method": "DELETE",
+    "sortNum": 10000,
+    "created": "2022-07-27T12:57:53.481Z",
+    "modified": "2022-07-27T12:57:53.481Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "36493ee3-a3c2-45c0-bd4a-e81816162eea",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Productos: Crear",
+    "url": "localhost:8080/api/productos",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2022-07-27T12:57:53.482Z",
+    "modified": "2022-07-27T12:57:53.482Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "title",
+        "value": "",
+        "isDisabled": true,
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"title\": \"Otro prod desde thunderclient 3\",\n  \"description\": \"Descripción del producto\",\n  \"thumbnail\": \"https://picsum.photos/301\",\n  \"price\": 30.00,\n  \"stock\": 100\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "df4fb6ef-d4c4-495b-8437-9e285c4da3fe",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Productos: Obtener todos",
+    "url": "localhost:8080/api/productos",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-07-27T12:57:53.483Z",
+    "modified": "2022-07-27T12:57:53.483Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "58a823be-d919-4e53-ba7a-8032236d9997",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Productos: Obtener por id",
+    "url": "localhost:8080/api/productos/5",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-07-27T12:57:53.484Z",
+    "modified": "2022-07-27T12:57:53.484Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "5b3a6e9f-cce0-4c6d-87b5-ebb754545ade",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Productos: Eliminar por id",
+    "url": "localhost:8080/api/productos/6",
+    "method": "DELETE",
+    "sortNum": 50000,
+    "created": "2022-07-27T12:57:53.485Z",
+    "modified": "2022-07-27T12:57:53.485Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "9fd0bcaa-61da-4370-bdfe-ecded754d88e",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Productos: Actalizar",
+    "url": "localhost:8080/api/productos/1",
+    "method": "PUT",
+    "sortNum": 60000,
+    "created": "2022-07-27T12:57:53.486Z",
+    "modified": "2022-07-27T12:57:53.486Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"title\":\"Actualizacion del 1\",\n    \"price\":12.35,\n    \"thumbnail\":\"https://picsum.photos/300\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "4efbe83e-e501-4b8f-bc67-8cd40aaeca44",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Carrito: Crear con ids",
+    "url": "localhost:8080/api/carrito",
+    "method": "POST",
+    "sortNum": 70000,
+    "created": "2022-07-27T12:57:53.487Z",
+    "modified": "2022-07-27T12:57:53.487Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"products\":[1,2,3,4]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "8a27a4d4-2541-42a9-a84c-f60f0d0b9c05",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Carrito: Obtener productos de un carrito",
+    "url": "localhost:8080/api/carrito/1/productos",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-07-27T12:57:53.488Z",
+    "modified": "2022-07-27T12:57:53.488Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ab1bf423-c479-4fa2-a220-d52ec4de786e",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Carrito: Agregar productos",
+    "url": "localhost:8080/api/carrito/3/productos",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2022-07-27T12:57:53.489Z",
+    "modified": "2022-07-27T12:57:53.489Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"id\":2\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "fafcb967-153f-4a44-bfad-a3aa9d6d2915",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Carrito: Eliminar producto de un carrito",
+    "url": "localhost:8080/api/carrito/3/productos/2",
+    "method": "DELETE",
+    "sortNum": 100000,
+    "created": "2022-07-27T12:57:53.490Z",
+    "modified": "2022-07-27T12:57:53.490Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "71693a74-e548-42f8-9924-88ce2ae1039e",
+    "colId": "dfc79f0a-6613-4b51-a4fa-ff46509dc15c",
+    "containerId": "",
+    "name": "Carrito: Eliminar carrito por id",
+    "url": "localhost:8080/api/carrito/5",
+    "method": "DELETE",
+    "sortNum": 110000,
+    "created": "2022-07-27T12:57:53.491Z",
+    "modified": "2022-07-27T12:57:53.491Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]

@@ -1,11 +1,8 @@
 import express from "express";
-import productsContainer from "./products_container.js";
-import cartContainer from "./cart_container.js";
+import { products as pContainer, cart as cContainer } from "./daos/index.js";
 
 const { Router } = express;
 const router = Router();
-const pContainer = new productsContainer();
-const cContainer = new cartContainer();
 
 let isAdmin = true;
 

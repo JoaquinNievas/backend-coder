@@ -1,15 +1,20 @@
 import fs from "fs";
-import productsContainer from "./products_container.js";
-const FILE_PATH = "cart.json";
+import { products as productsContainer } from "../../index.js";
 
 export default class Contenedor {
+  constructor(FILE_PATH) {
+    this.FILE_PATH = FILE_PATH;
+  }
+
   async readFile() {
     let data = [];
     let exist = true;
     //verifico si existe el archivo
-    await fs.promises.stat(FILE_PATH).catch((_) => (exist = false));
+    await fs.promises.stat(this.FILE_PATH).catch((_) => (exist = false));
     console.log(`La base de datos ${exist ? "existe" : "no existe"}`);
-    const file = exist ? await fs.promises.readFile(FILE_PATH, "utf-8") : false;
+    const file = exist
+      ? await fs.promises.readFile(this.FILE_PATH, "utf-8")
+      : false;
 
     if (file) data = JSON.parse(file);
 
@@ -17,16 +22,14 @@ export default class Contenedor {
   }
 
   async saveFile(data) {
-    await fs.promises.writeFile(FILE_PATH, JSON.stringify(data));
+    await fs.promises.writeFile(this.FILE_PATH, JSON.stringify(data));
   }
 
   async save(cart) {
     let data = await this.readFile();
     cart.id = data.length == 0 ? 1 : parseInt(data[data.length - 1].id) + 1;
     cart.timestamp = new Date().getTime();
-    const products = await new productsContainer().getByMultipleId(
-      cart.products
-    );
+    const products = await productsContainer.getByMultipleId(cart.products);
     cart.products = products;
     data.push(cart);
     await this.saveFile(data);
@@ -53,7 +56,7 @@ export default class Contenedor {
     );
     if (productIndex !== -1) throw new Error("Producto ya existe");
 
-    let product = await new productsContainer().getById(productId);
+    let product = await productsContainer.getById(productId);
     if (!product) throw new Error("Producto no encontrado");
     cart.products.push(product);
     await this.saveFile(data);
